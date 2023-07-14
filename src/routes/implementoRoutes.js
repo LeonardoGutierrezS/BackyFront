@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Implemento = require('../models/implemento');
-const { getAllImplementos, getAllImplementosByestado } = require("../controllers/implementoController")
+const { getAllImplementos, getAllImplementosByEstado } = require("../controllers/implementoController")
 
 // Ruta para registrar un nuevo implemento
 
@@ -26,12 +26,25 @@ router.post('/implementos', async (req, res) => {
     }
   });
 
+
+// busca un implemento (por el parametro estado) 
+//modificable para cualquier parametro
+
+router.get('/implementos/buscar', async (req, res) => {
+    const { estado } = req.query;
+    const implementos = await getAllImplementosByEstado(estado);
+    res.json(implementos)
+})
+
+
+//busca y muestra todos los implementos 
 router.get('/implementos', async (req, res) => {
     const implementos = await getAllImplementos();
     res.json(implementos)
 
 })
 
+//busca los implementos por la ide de la base de datos
 router.get('/implementos/:id', async (req, res) => {
     const { id } = req.params
     const implemento = await Implemento.findById(id)
@@ -39,6 +52,7 @@ router.get('/implementos/:id', async (req, res) => {
 
 })
 
+//elimina implementos por su _id de mongos
 router.delete('/implementos/:id', async (req, res) => {
     const { id } = req.params
     const implemento = await Implemento.findByIdAndDelete(id)
@@ -47,12 +61,7 @@ router.delete('/implementos/:id', async (req, res) => {
 })
 
 
-//puras weas
 
-router.get('/implementos', async (req, res) => {
-    const implementos = await getAllImplementosByestadoOperativo("operativo");
-    res.json(implementos)
 
-})
 
 module.exports = router;
