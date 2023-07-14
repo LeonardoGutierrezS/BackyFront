@@ -24,6 +24,6 @@ const implementoSchema = new mongoose.Schema({
   fechaMantenimiento: Date,
 });
 
-const Implemento = mongoose.model('Implemento', implementoSchema);
+const Implemento = mongoose.model('implemento', implementoSchema);
 
 module.exports = Implemento;

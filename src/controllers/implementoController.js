@@ -33,13 +33,12 @@ const getAllImplementos = async () => {
 
 //puras weas
 
-const getAllImplementosByestadoOperativo = async (estado) => {
+const getAllImplementosByEstado = async (estado) => {
   const implementos = await Implemento.find({ estado });
   return implementos;
 };
 
 module.exports = {
   getAllImplementos,
-  getAllImplementosByestadoOperativo
+  getAllImplementosByEstado
 }
-
