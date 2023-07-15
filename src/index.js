@@ -13,6 +13,7 @@ try {
 } catch (error) {
     console.log(error);
 }
+
 //user index part
 const userSchema = new mongoose.Schema({
     nombre: String,
