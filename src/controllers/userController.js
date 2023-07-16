@@ -30,6 +30,3 @@ exports.getAllUsers = async (req, res) => {
     res.status(500).json({ message: 'Error al obtener usuarios' });
   }
 };
-
-// Otros controladores para la gestión de usuarios (actualizar, eliminar, etc.)
-// ...

@@ -13,6 +13,7 @@ try {
 } catch (error) {
     console.log(error);
 }
+
 //user index part
 const userSchema = new mongoose.Schema({
     nombre: String,
@@ -64,5 +65,3 @@ app.use(implementoRoutes)
 app.listen(3001, () => {
     console.log('Servidor listo',3001);
 })
-
-//
