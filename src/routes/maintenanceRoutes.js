@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const mantenimientoController = require('../controllers/mantenimientoController');
+//rutas por funciones
+
 
 // Enviar implemento a mantencion
 router.post('/enviar-mantenimiento', mantenimientoController.enviarMantenimiento);
