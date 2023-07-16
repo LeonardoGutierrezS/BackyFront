@@ -1,7 +1,7 @@
 const Maintenance = require('../models/Maintenance');
 const Implemento = require('../models/Implemento');
 
-// Función para enviar un implemento a mantenimiento
+// ENVIAR ELEMENTO A MANTENIMIENTO
 exports.enviarMantenimiento = async (req, res) => {
   try {
     const { implementoId, observaciones } = req.body;
@@ -24,7 +24,7 @@ exports.enviarMantenimiento = async (req, res) => {
 
     await maintenance.save();
 
-    // Actualizar el estado del implemento a "No Disponible"
+    // IMPLEMENTO A ESTADO NO DISPONIBLE
     implemento.estado = 'No Disponible';
     await implemento.save();
 
@@ -35,7 +35,7 @@ exports.enviarMantenimiento = async (req, res) => {
   }
 };
 
-// Función para marcar un implemento como disponible
+// FUNCION DE LA DISPONIBILIDAD DE UN IMPLEMENTO EN MANTENCION
 exports.marcarDisponible = async (req, res) => {
   try {
     const { implementoId } = req.body;
@@ -46,7 +46,7 @@ exports.marcarDisponible = async (req, res) => {
       return res.status(404).json({ message: 'No se encontró el implemento en mantenimiento.' });
     }
 
-    // Realizar evaluación de implementos antes de marcarlos como disponibles 
+    // EVALUACION PREVIA A LA DISPONIBILIDAD
     const implemento = await Implemento.findById(implementoId);
     const evaluacionExitosa = await realizarEvaluacion(implemento);
 
@@ -54,14 +54,14 @@ exports.marcarDisponible = async (req, res) => {
       return res.status(400).json({ message: 'No se han realizado las reparaciones necesarias en el implemento.' });
     }
 
-    // Actualizar el estado del implemento a "Disponible"
+    // IMPLEMENTO A DISPONIBLE
     implemento.estado = 'Disponible';
     await implemento.save();
 
-    // Eliminar la entrada de mantenimiento
+    // ELIMINAR ENTRADA DE MANTENIMIENTO
     await maintenance.remove();
 
-    // Registrar acción en el historial de operaciones de mantenimiento 
+    // REGISTRO DE ACCION 
     await registrarOperacionMantenimiento(implemento, 'Disponible');
 
     res.json({ message: 'Implemento marcado como disponible exitosamente.' });
@@ -71,20 +71,19 @@ exports.marcarDisponible = async (req, res) => {
   }
 };
 
-// Función para realizar la evaluación de implementos 
+// FUNCION DE EVALUACION DE IMPLEMENTOS
 async function realizarEvaluacion(implemento) {
-  // Lógica de evaluación de implementos
-  // Verificar si se realizaron las reparaciones necesarias
+  //EVALUACION DE REPARACION
   const reparacionesRealizadas = implemento.reparacionesRealizadas || [];
   const reparacionesNecesarias = implemento.reparacionesNecesarias || [];
 
-  // Comparar las reparaciones realizadas con las reparaciones necesarias
+  // COMPARACION DE EVALUACIONES 
   const evaluacionExitosa = reparacionesNecesarias.every(reparacion => reparacionesRealizadas.includes(reparacion));
 
   return evaluacionExitosa;
 }
 
-// Función para registrar una operación en el historial de operaciones de mantenimiento 
+// REGISTRO DE OPERACIONES DE MANTENIMIENTO
 async function registrarOperacionMantenimiento(implemento, estado) {
   const operacion = {
     implemento: implemento._id,
