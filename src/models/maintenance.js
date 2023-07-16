@@ -1,20 +1,24 @@
-const express = require('express');
-const router = express.Router();
-const Implemento = require('./implemento');
+const mongoose = require('mongoose');
 
-// Ruta para registrar una fecha de mantenimiento
-router.post('/maintenance', async (req, res) => {
-  try {
-    const { implementoId, fechaMantenimiento } = req.body;
-
-    // Buscar el implemento en la base de datos
-
-    // Actualizar la fecha de mantenimiento
-
-    res.status(200).json({ message: 'Fecha de mantenimiento registrada correctamente' });
-  } catch (error) {
-    res.status(500).json({ message: 'Error al registrar fecha de mantenimiento' });
-  }
+const MaintenanceSchema = new mongoose.Schema({
+  implemento: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Implemento',
+    required: true,
+  },
+  estado: {
+    type: String,
+    enum: ['En Mantenimiento', 'Disponible'],
+    required: true,
+    default: 'En Mantenimiento',
+  },
+  fecha: {
+    type: Date,
+    default: Date.now,
+  },
+  observaciones: {
+    type: String,
+  },
 });
 
-module.exports = router;
+module.exports = mongoose.model('Maintenance', MaintenanceSchema);
