@@ -23,13 +23,13 @@ exports.generateMaintenanceReport = async (req, res) => {
     const maintenances = await Maintenance.find();
 
     // Generar el informe de mantenimientos
+
     // ...
+
+
 
     res.status(200).json({ message: 'Informe de mantenimientos generado correctamente' });
   } catch (error) {
     res.status(500).json({ message: 'Error al generar el informe de mantenimientos' });
   }
 };
-
-// Otros controladores para la generación de informes
-// ...

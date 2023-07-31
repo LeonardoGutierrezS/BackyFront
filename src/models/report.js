@@ -1,18 +1,33 @@
-const express = require('express');
-const router = express.Router();
-const Implemento = require('../models/implemento');
+// Importa el módulo 'mongoose' para crear la conexión a la base de datos
+const mongoose = require('mongoose');
 
-// Ruta para generar un informe
-router.get('/reports', async (req, res) => {
-  try {
-    // Obtener datos necesarios para el informe (implementos, asignaciones, fechas de mantenimiento, etc.)
-
-    // Generar el informe
-
-    res.status(200).json({ report });
-  } catch (error) {
-    res.status(500).json({ message: 'Error al generar informe' });
-  }
+// Crea el esquema de la colección 'informes'
+const reportSchema = new mongoose.Schema({
+    nombre: {
+        type: String,
+        required: true,
+    },
+    id: {
+        type: String,
+        required: true,
+        unique: true,
+    },
+    fecha: {
+        type: String,
+        required: true,
+    },
+    implemento: {
+        type: String,
+        required: true,
+    },
+    estado: {
+        type: String,
+        required: true,
+    },
 });
 
-module.exports = router;
+// Crea el modelo de datos 'informe' a partir del esquema 'usuarioSchema'
+const report = mongoose.model('report', usuarioSchema);
+
+// Exporta el modelo de datos 'informe'
+module.exports = report;
