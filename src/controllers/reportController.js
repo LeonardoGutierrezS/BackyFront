@@ -1,35 +1,46 @@
-const Implemento = require('../models/Implemento');
-const Maintenance = require('../models/Maintenance');
+const Report = require('../models/report');
+const maintenanceController = require('./maintenanceController');
 
-// Controlador para generar un informe de implementos
-exports.generateImplementoReport = async (req, res) => {
+exports.NuevoReporte = async (req, res) => {
   try {
-    // Obtener todos los implementos
-    const implementos = await Implemento.find();
+    const { username, idImplemento, fecha, observaciones } = req.body;
+    const nuevoInforme = new Report({
+      username,
+      idImplemento,
+      fecha,
+      observaciones,
+    });
 
-    // Generar el informe de implementos
-    // ...
+    await nuevoInforme.save();
 
-    res.status(200).json({ message: 'Informe de implementos generado correctamente' });
+    res.json({ message: 'Informe creado exitosamente.' });
   } catch (error) {
-    res.status(500).json({ message: 'Error al generar el informe de implementos' });
+    console.error(error);
+    res.status(500).json({ error: 'Error al generar un nuevo informe' });
   }
 };
 
-// Controlador para generar un informe de mantenimientos
-exports.generateMaintenanceReport = async (req, res) => {
+exports.getAllReports = async (req, res) => {
   try {
-    // Obtener todos los mantenimientos
-    const maintenances = await Maintenance.find();
+    // Consultar la base de datos para obtener todos los reportes
+    const reports = await Report.find();
 
-    // Generar el informe de mantenimientos
-
-    // ...
-
-
-
-    res.status(200).json({ message: 'Informe de mantenimientos generado correctamente' });
+    res.status(200).json(reports);
   } catch (error) {
-    res.status(500).json({ message: 'Error al generar el informe de mantenimientos' });
+    res.status(500).json({ message: 'Error al obtener los reportes' });
   }
 };
+
+exports.deleteAllReports = async (req, res) => {
+  try {
+    const deleteResult = await Report.deleteMany();
+    if (deleteResult.deletedCount > 0) {
+      res.status(200).json({ message: 'Se eliminaron todos los reportes correctamente.' });
+    } else {
+      res.status(404).json({ message: 'No se encontraron reportes para eliminar.' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Error al eliminar los reportes.' });
+  }
+};
+

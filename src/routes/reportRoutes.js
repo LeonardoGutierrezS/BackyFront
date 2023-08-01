@@ -1,8 +1,14 @@
-const express = require('express');
+express = require('express');
 const router = express.Router();
 const reportController = require('../controllers/reportController');
 
-// Ruta para generar un informe
-router.get('/reports', reportController.generateReport);
+//crea un nuevo reporte
+router.post('/crearreporte', reportController.NuevoReporte);
+
+//obtiene todos los reportes
+router.get('/reportes', reportController.getAllReports);
+
+//elimina todos los reportes
+router.delete('/reportes', reportController.deleteAllReports);
 
 module.exports = router;

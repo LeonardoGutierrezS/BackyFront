@@ -1,33 +1,23 @@
-// Importa el módulo 'mongoose' para crear la conexión a la base de datos
 const mongoose = require('mongoose');
 
-// Crea el esquema de la colección 'informes'
 const reportSchema = new mongoose.Schema({
-    nombre: {
+    username: {
         type: String,
         required: true,
     },
-    id: {
+    idImplemento: {
         type: String,
         required: true,
-        unique: true,
     },
     fecha: {
-        type: String,
-        required: true,
+        type: Date,
+        default: Date.now,
     },
-    implemento: {
-        type: String,
-        required: true,
-    },
-    estado: {
-        type: String,
-        required: true,
+    observaciones: {
+        type: String, // Assuming 'observaciones' is of type String, change it accordingly if it's a different type
     },
 });
 
-// Crea el modelo de datos 'informe' a partir del esquema 'usuarioSchema'
-const report = mongoose.model('report', usuarioSchema);
+const Report = mongoose.model('Report', reportSchema);
 
-// Exporta el modelo de datos 'informe'
-module.exports = report;
+module.exports = Report;

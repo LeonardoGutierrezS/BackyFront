@@ -1,8 +1,6 @@
 const Implemento = require('../models/implemento');
 const ImplementoController = require('./implementoController');
 
-
-// Controlador para obtener el inventario de implementos:
 exports.getInventory = async (req, res) => {
   try {
     const implementos = await ImplementoController.getAllImplementos();
@@ -14,7 +12,6 @@ exports.getInventory = async (req, res) => {
 exports.getInventoryByEstado = async (req, res) => {
   try {
     const { estado } = req.params;
-    // Realizar la búsqueda de implementos por estado en la base de datos
     const implementos = await Implemento.find({ estado });
     res.status(200).json(implementos);
   } catch (error) {
@@ -22,7 +19,6 @@ exports.getInventoryByEstado = async (req, res) => {
   }
 };
 
-// Controlador para actualizar un implemento en el inventario:
 exports.updateInventory = async (req, res) => {
   try {
     const { id } = req.params;
@@ -37,7 +33,6 @@ exports.updateInventory = async (req, res) => {
     const historialEntry = { ...implementoActual, fechaCambio: new Date() };
     await Implemento.findByIdAndUpdate(id, { $push: { historial: historialEntry } });
 
-    // Actualiza el implemento con los nuevos datos
     const implementoActualizado = await ImplementoController.findByIdAndUpdate(id, updateData, { new: true });
 
     res.status(200).json(implementoActualizado);
@@ -47,7 +42,6 @@ exports.updateInventory = async (req, res) => {
 };
 
 
-// Controlador para buscar implementos en el inventario por su id
 exports.getImplementoById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -63,10 +57,8 @@ exports.getImplementoById = async (req, res) => {
   }
 };
 
-// Controlador para ver el historial del inventario (todos los cambios)
 exports.getInventoryHistory = async (req, res) => {
   try {
-    // Utilizar el campo 'historial' directamente sin usar el operador $slice
     const historialInventario = await Implemento.find({}, 'historial');
 
     res.status(200).json(historialInventario);

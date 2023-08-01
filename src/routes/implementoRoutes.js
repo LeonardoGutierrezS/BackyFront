@@ -3,13 +3,12 @@ const router = express.Router();
 const Implemento = require('../models/implemento');
 const { getAllImplementos, getAllImplementosByEstado } = require("../controllers/implementoController")
 
-// Ruta para registrar un nuevo implemento
 
 router.post('/implementos', async (req, res) => {
     try {
         const { descripcion, categoria, estado, numeroSerie, asignadoA, fechaMantenimiento } = req.body;
 
-        // Crear un nuevo Implemento
+
         const nuevoImplemento = new Implemento({
             descripcion,
             categoria,
@@ -17,7 +16,7 @@ router.post('/implementos', async (req, res) => {
             numeroSerie,asignadoA,fechaMantenimiento,
         });
 
-        // Guardar el Implemento en la base de datos
+
         await nuevoImplemento.save();
 
         res.status(200).json({ message: 'Implemento agregado correctamente' });
