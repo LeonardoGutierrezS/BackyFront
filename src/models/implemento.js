@@ -50,6 +50,7 @@ implementoSchema.statics.findByIdAndUpdate = async function (id, updateData) {
   }
 };
 
+
 const Implemento = mongoose.model('implemento', implementoSchema);
 
 module.exports = Implemento;

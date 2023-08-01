@@ -38,6 +38,11 @@ const getAllImplementosByEstado = async (estado) => {
   return implementos;
 };
 
+const getImplementoById = async (id) => {
+  const implementos = await Implemento.find({ id });
+  return implementos;
+};
+
 const updateInventory = async (req, res) => {
   try {
     const { id } = req.params;
@@ -58,6 +63,7 @@ const updateInventory = async (req, res) => {
 };
 
 module.exports = {
+  getImplementoById,
   createImplemento,
   getAllImplementos,
   getAllImplementosByEstado,

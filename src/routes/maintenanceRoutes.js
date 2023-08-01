@@ -1,20 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const mantenimientoController = require('../controllers/mantenimientoController');
-//rutas por funciones
-
+const maintenanceController = require('../controllers/maintenanceController');
 
 // Enviar implemento a mantencion
-router.post('/enviar-mantenimiento', mantenimientoController.enviarMantenimiento);
+router.post('/enviarmantenimiento', maintenanceController.enviarMantenimiento);
 
-// Marcar implemento como estado : disponible
-router.post('/marcar-disponible', mantenimientoController.marcarDisponible);
-
-// Enviar implemento a evaluacion
-router.get('/evaluar-implementos', mantenimientoController.evaluarImplementos);
-
-// Enviar registro de mantencion
-router.post('/registrar-operacion', mantenimientoController.registrarOperacion);
+// Marcar implemento como estado : operativo
+router.post('/marcardisponible', maintenanceController.marcarDisponible);
 
 module.exports = router;
 //

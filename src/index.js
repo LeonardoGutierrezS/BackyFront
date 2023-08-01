@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const implementoRoutes = require("./routes/implementoRoutes")
 const userRoutes = require("./routes/userRoutes")
 const inventoryRoutes = require("./routes/inventoryRoutes")
+const maitenanceRoutes = require("./routes/maintenanceRoutes")
 const app = express();
 
 app.use(express.json());
@@ -17,6 +18,7 @@ try {
 
 app.use(implementoRoutes)
 app.use(userRoutes)
+app.use(maitenanceRoutes)
 app.use(inventoryRoutes)
 
 // JOAQUIN

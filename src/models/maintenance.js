@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const MaintenanceSchema = new mongoose.Schema({
+const maintenanceSchema = new mongoose.Schema({
   implemento: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Implemento',
@@ -8,23 +8,19 @@ const MaintenanceSchema = new mongoose.Schema({
   },
   estado: {
     type: String,
-    enum: ['En Mantenimiento', 'Disponible'],
+    enum: ['Finalizado', 'En mantenimiento'],
     required: true,
-    default: 'En Mantenimiento',
+  },
+  observaciones: {
+    type: String,
+    default: '',
   },
   fecha: {
     type: Date,
     default: Date.now,
   },
-  observaciones: {
-    type: String,
-  },
 });
 
+const Maintenance = mongoose.model('Maintenance', maintenanceSchema);
 
-module.exports = mongoose.model('Maintenance', MaintenanceSchema);
-
-
-
-
-///
+module.exports = Maintenance;
