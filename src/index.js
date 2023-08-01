@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const implementoRoutes = require("./routes/implementoRoutes")
-
+const userRoutes = require("./routes/userRoutes")
 const app = express();
 
 app.use(express.json());
@@ -14,59 +14,15 @@ try {
     console.log(error);
 }
 
-//user index part
-const userSchema = new mongoose.Schema({
-    nombre: String,
-    apellido: String,
-    username: String
-});
-
-const User = mongoose.model('User', userSchema);
-
-app.get('/', (req, res) => {
-    User.find()
-        .then((user) => res.json(user))
-        .catch(error => res.json(error))
-});
-
-//Ruta para guardar usuarios
-app.post('/user', (req, res) => {
-    const body = req.body;
-    const user = new User(body)
-    user.save();
-    res.json({
-        mensage: 'Usuario guardado',
-        user,
-    });
-});
-
-app.put('/:id',async(req, res) => {
-    const {id} = req.params;
-    const body = req.body;
-
-    const newDato = await User.findByIdAndUpdate(id, body,{new:true})
-    res.json({
-        mensage: 'Usuario actualizado',
-        body,
-    });
-})
-
-app.delete('/:id',async(req, res) => {
-    const {id} = req.params;
-    await User.findByIdAndDelete(id);
-    res.json({
-        mensage: 'Usuario eliminado',
-    })
-})
-
 app.use(implementoRoutes)
+app.use(userRoutes)
 
+
+// JOAQUIN
 let informe = [
     { id: 1, name: 'Joaqupin Pérez', fecha: '2021-10-10', implemento: 'Martillo', estado: 'Bueno' },
     { id: 2, name: 'Eduardo Riquelme', fecha: '2021-10-10', implemento: 'Martillo', estado: 'Bueno' },
   ];
-  
-
 
 // Como usuario quiero poder ver los informes creados
 app.get('/reports', function (request, response) {
