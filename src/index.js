@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const implementoRoutes = require("./routes/implementoRoutes")
 const userRoutes = require("./routes/userRoutes")
+const inventoryRoutes = require("./routes/inventoryRoutes")
 const app = express();
 
 app.use(express.json());
@@ -16,7 +17,7 @@ try {
 
 app.use(implementoRoutes)
 app.use(userRoutes)
-
+app.use(inventoryRoutes)
 
 // JOAQUIN
 let informe = [

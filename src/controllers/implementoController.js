@@ -24,8 +24,8 @@ const createImplemento = async (req, res) => {
 
 // Controlador para obtener todos los implementos
 const getAllImplementos = async () => {
-    const implementos = await Implemento.find();
-    return implementos;
+  const implementos = await Implemento.find();
+  return implementos;
 };
 
 // Otros controladores para la gestión de implementos (actualizar, eliminar, etc.)
@@ -38,7 +38,28 @@ const getAllImplementosByEstado = async (estado) => {
   return implementos;
 };
 
+const updateInventory = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { descripcion, categoria, estado, numeroSerie, asignadoA, fechaMantenimiento } = req.body;
+
+    const updateData = { descripcion, categoria, estado, numeroSerie, asignadoA, fechaMantenimiento };
+
+    const implementoActualizado = await Implemento.findByIdAndUpdate(id, updateData);
+
+    if (!implementoActualizado) {
+      return res.status(404).json({ message: 'Implemento no encontrado' });
+    }
+
+    res.status(200).json(implementoActualizado);
+  } catch (error) {
+    res.status(500).json({ message: 'Error al actualizar el inventario', error });
+  }
+};
+
 module.exports = {
+  createImplemento,
   getAllImplementos,
-  getAllImplementosByEstado
+  getAllImplementosByEstado,
+  updateInventory,
 }

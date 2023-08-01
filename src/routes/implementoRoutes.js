@@ -7,27 +7,27 @@ const { getAllImplementos, getAllImplementosByEstado } = require("../controllers
 
 router.post('/implementos', async (req, res) => {
     try {
-      const { descripcion, categoria, estado, numeroSerie } = req.body;
-  
-      // Crear un nuevo Implemento
-      const nuevoImplemento = new Implemento({
-        descripcion,
-        categoria,
-        estado,
-        numeroSerie
-      });
-  
-      // Guardar el Implemento en la base de datos
-      await nuevoImplemento.save();
-  
-      res.status(200).json({ message: 'Implemento agregado correctamente' });
+        const { descripcion, categoria, estado, numeroSerie, asignadoA, fechaMantenimiento } = req.body;
+
+        // Crear un nuevo Implemento
+        const nuevoImplemento = new Implemento({
+            descripcion,
+            categoria,
+            estado,
+            numeroSerie,asignadoA,fechaMantenimiento,
+        });
+
+        // Guardar el Implemento en la base de datos
+        await nuevoImplemento.save();
+
+        res.status(200).json({ message: 'Implemento agregado correctamente' });
     } catch (error) {
-      res.status(500).json({ message: 'Error al Ingresar Implemento', error });
+        res.status(500).json({ message: 'Error al Ingresar Implemento', error });
     }
-  });
+});
 
 
-// busca un implemento (por el parametro estado) 
+// busca un implemento (por el parametro estado)
 //modificable para cualquier parametro
 
 router.get('/implementos/buscar', async (req, res) => {
@@ -37,7 +37,7 @@ router.get('/implementos/buscar', async (req, res) => {
 })
 
 
-//busca y muestra todos los implementos 
+//busca y muestra todos los implementos
 router.get('/implementos', async (req, res) => {
     const implementos = await getAllImplementos();
     res.json(implementos)
@@ -59,9 +59,5 @@ router.delete('/implementos/:id', async (req, res) => {
     res.json(implemento)
 
 })
-
-
-
-
 
 module.exports = router;

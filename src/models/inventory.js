@@ -1,15 +1,14 @@
 const express = require('express');
-const router = express.Router();
-const Implemento = require('../models/implemento');
+const router = express.Router(); Agregar esta línea
+const ImplementoController = require('../controllers/implementoController');
 
-// Ruta para obtener el inventario completo
 router.get('/inventory', async (req, res) => {
   try {
     // Obtener todos los implementos de la base de datos
-
-    res.status(200).json({ inventory });
+    const inventory = await ImplementoController.getAllImplementos(); // Consulta para obtener todos los implementos
+    res.status(200).json(inventory); // Responder con los datos del inventario
   } catch (error) {
-    res.status(500).json({ message: 'Error al obtener inventario' });
+    res.status(500).json({ message: 'Error al obtener inventario', error });
   }
 });
 
